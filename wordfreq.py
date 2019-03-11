@@ -1,49 +1,62 @@
 import re
 
-class IWordFrequency():
 
-    def WordFrequency(wordstring):
+class WordFrequency:
+
+    def word_freq(self):
+        """Return word frequency of all words in a string"""
+        if not isinstance(self, str):
+            raise TypeError('\'self\' should be of type string')
 
         # split string into words
-        wordlist = re.split('[^a-zA-Z]', wordstring.lower())
-        wordlist = list(filter(None, wordlist))
+        word_list = re.split('[^a-zA-Z]', self.lower())
+        word_list = list(filter(None, word_list))
 
         # add word frequencies and make dictionary
-        wordfreq = [(p, wordlist.count(p)) for p in wordlist]
-        freqdict = dict(wordfreq)
+        word_freq = [(p, word_list.count(p)) for p in word_list]
+        freq_dict = dict(word_freq)
 
-        return freqdict
+        return freq_dict
 
 
-class IWordFrequencyAnalyzer():
+class WordFrequencyAnalyzer:
 
-    def CalculateHighestFrequency(wordstring):
+    def calc_high_freq(self):
+        """Return the highest word frequency of a string."""
+        if not isinstance(self, str):
+            raise TypeError('\'self\' should be of type string')
 
-        freqdict = IWordFrequency.WordFrequency(wordstring)
+        freq_dict = WordFrequency.word_freq(self)
 
         # return the largest frequency
-        if freqdict:
-            return freqdict[max(freqdict, key=freqdict.get)]
+        if freq_dict:
+            return freq_dict[max(freq_dict, key=freq_dict.get)]
         else:
             return 0
 
-    def CalculateFrequencyForWord(wordstring, word):
+    def calc_freq_word(self, word):
+        """Return the word frequency of a word in a string."""
+        if not isinstance(self, str):
+            raise TypeError('\'self\' should be of type string')
 
-        freqdict = IWordFrequency.WordFrequency(wordstring)
+        freq_dict = WordFrequency.word_freq(self)
 
         # return frequency of word
-        if word in freqdict:
-            return freqdict[word]
+        if word in freq_dict:
+            return freq_dict[word]
         else:
             return 0
 
-    def CalculateMostFrequentNWords(wordstring, n):
+    def calc_most_freq_word(self, n):
+        """Return the most frequent n words in a string."""
+        if not isinstance(self, str):
+            raise TypeError('\'self\' should be of type string')
 
-        freqdict = IWordFrequency.WordFrequency(wordstring)
+        freq_dict = WordFrequency.word_freq(self)
 
         # make list and sort
-        freqdictsorted = [(key, freqdict[key]) for key in freqdict]
-        freqdictsorted.sort(key = lambda l: (-l[1], l[0]))
+        freq_dict_sorted = [(key, freq_dict[key]) for key in freq_dict]
+        freq_dict_sorted.sort(key=lambda l: (-l[1], l[0]))
 
         # return 1:n highest frequency words
-        return freqdictsorted[:n]
+        return freq_dict_sorted[:n]

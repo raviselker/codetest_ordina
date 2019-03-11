@@ -1,28 +1,46 @@
 import unittest
-from wordfreq import IWordFrequencyAnalyzer
+from wordfreq import WordFrequencyAnalyzer
+
 
 class TestCore(unittest.TestCase):
 
-    def test_wordfreq(self):
+    def test_calc_high_freq(self):
 
-        wordstring = 'It was, the best of times it was the worst of times '
-        wordstring += 'it was the age of wisdom it was the age of foolishness'
+        word_string = 'The sun shines over the lake'
 
-        t1 = IWordFrequencyAnalyzer.CalculateHighestFrequency(wordstring)
-        t2 = IWordFrequencyAnalyzer.CalculateFrequencyForWord(wordstring, 'times')
-        t3 = IWordFrequencyAnalyzer.CalculateMostFrequentNWords(wordstring, 3)
-        t4 = IWordFrequencyAnalyzer.CalculateHighestFrequency('')
-        t5 = IWordFrequencyAnalyzer.CalculateMostFrequentNWords('', 2)
-        t6 = IWordFrequencyAnalyzer.CalculateFrequencyForWord('it is time for a time-out', 'time')
-        t7 = IWordFrequencyAnalyzer.CalculateHighestFrequency('NOT not NoT nOt')
+        test_1 = WordFrequencyAnalyzer.calc_high_freq(word_string)
+        self.assertEqual(test_1, 2)
 
-        self.assertEqual(t1, 4)
-        self.assertEqual(t2, 2)
-        self.assertEqual(t3[2], ('the', 4))
-        self.assertEqual(t4, 0)
-        self.assertEqual(t5, [])
-        self.assertEqual(t6, 2)
-        self.assertEqual(t7, 4)
+        test_2 = WordFrequencyAnalyzer.calc_high_freq('')
+        self.assertEqual(test_2, 0)
+
+        test_3 = WordFrequencyAnalyzer.calc_high_freq('NOT not NoT nOt')
+        self.assertEqual(test_3, 4)
+
+    def test_calc_freq_word(self):
+
+        word_string = 'It was the best of times it was the worst of times ' \
+                      'it was the age of wisdom it was the age of foolishness'
+
+        test_1 = WordFrequencyAnalyzer.calc_freq_word(word_string, 'times')
+        self.assertEqual(test_1, 2)
+
+        test_2 = WordFrequencyAnalyzer.calc_freq_word('it is time for a time-out', 'time')
+        self.assertEqual(test_2, 2)
+
+        test_3 = WordFrequencyAnalyzer.calc_freq_word('', 'time')
+        self.assertEqual(test_3, 0)
+
+    def test_most_freq_word(self):
+
+        word_string = 'The sun shines over the lake'
+
+        test_1 = WordFrequencyAnalyzer.calc_most_freq_word(word_string, 3)
+        self.assertEqual(test_1, [('the', 2), ('lake', 1), ('over', 1)])
+
+        test_2 = WordFrequencyAnalyzer.calc_most_freq_word('', 2)
+        self.assertEqual(test_2, [])
+
 
 if __name__ == '__main__':
     unittest.main()
