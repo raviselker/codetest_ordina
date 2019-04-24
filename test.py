@@ -1,5 +1,5 @@
 import unittest
-from wordfreq import WordFrequencyAnalyzer
+from wordfreq import *
 
 
 class TestCore(unittest.TestCase):
@@ -32,10 +32,13 @@ class TestCore(unittest.TestCase):
     def test_most_freq_word(self):
 
         test_1 = WordFrequencyAnalyzer('The sun shines over the lake')
-        self.assertEqual(test_1.calc_most_freq_word(3), [('the', 2), ('lake', 1), ('over', 1)])
+        self.assertEqual(test_1.calc_most_freq_words(3), [
+            WordFrequency('the', 2),
+            WordFrequency('lake', 1),
+            WordFrequency('over', 1)])
 
         test_2 = WordFrequencyAnalyzer('')
-        self.assertEqual(test_2.calc_most_freq_word(3), [])
+        self.assertEqual(test_2.calc_most_freq_words(3), [])
 
 
 if __name__ == '__main__':
